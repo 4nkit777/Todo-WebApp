@@ -1,0 +1,165 @@
+/* Resets */
+
+* {
+    box-sizing: border-box;
+    margin: 0 
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    font-size: 2em;
+    background-color: #97C8EB;
+}
+
+.container {
+    margin-top: 10%;
+    width: 70vh;
+    height: 100%;
+    display: grid;
+    /* grid-template-rows: 1fr 1fr 3fr; */
+    grid-gap: 10px;
+    justify-content: center;
+}
+/*      Welcome Headings       */
+
+.welcome-user {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    justify-content: center;
+    width: inherit;
+    color: #093A3E;
+}
+
+.welcome-user h2 {
+    font-size: 1.2em;
+    justify-self: center;
+}
+
+.welcome-user p {
+    font-size: 0.6em;
+    align-self: center;
+}
+
+/*      Input field     */
+
+.task-input-field {
+    width: inherit;
+    box-shadow: 0px 1px 1px rgb(172, 172, 172);
+}
+
+.task-input-field input {
+    width: 100%;
+    height: 10vh;
+    border-radius: 3px;
+    border: none;
+    /* background-color: #3AAFB9; */
+    background-image: linear-gradient(
+        to right,
+        #093a3e,
+        #3AAFB9
+    );
+    color: ivory;
+    font-size: 0.9em;
+    padding: 10px;
+}
+
+/*      Task List       */
+
+div.task-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+ul.incomplete-task {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap: 10px;
+    margin: 0;
+    padding: 5px;   /* set a gap between two lists */
+}
+
+li#list-items {
+    list-style-type: none;
+    background-color: ivory;
+    color: #3AAFB9;
+    padding: 8px;
+    border-radius: 3px;
+    font-size: 0.6em;
+    box-shadow: 0px 1px 1px rgb(172, 172, 172);
+
+    display: grid;
+    grid-template-columns: 1fr 10fr 1fr;
+    justify-items: start;
+}
+
+li#list-items:hover {
+    background-color: whitesmoke;
+}
+
+
+button.add, button.delete {
+    background-color: transparent;
+    width: 22px;
+    height: 22px;
+    border: none;
+    text-decoration: none;
+}
+
+/*      Add button SVG      */
+
+ul.incomplete-task li#list-items button.add svg .tick-mark01 {
+    fill: #3AAFB9;
+}
+
+ul.incomplete-task li#list-items button.add svg .tick-mark02 {
+    fill: none;
+}
+
+ul.incomplete-task li#list-items button.add:hover svg .tick-mark02 {
+    fill: #3AAFB9;
+    transition: fill ease-in 0.9s;
+}
+
+/*      Delete button SVG       */
+
+ul.incomplete-task li#list-items button.delete svg .delete-btn {
+    fill: #3AAFB9;
+}
+
+ul.incomplete-task li#list-items button.delete:hover svg .delete-btn {
+    fill: red;
+    transition: fill ease-in 0.4s;
+}
+
+/*      Done Button     */
+ul.incomplete-task li#list-items button.doneBtn svg .tick-mark02 {
+    fill: white;
+}
+
+ul.incomplete-task li#list-items button.doneBtn svg .tick-mark01 {
+    fill: none;
+}
+
+ul.incomplete-task li#list-items button.doneBtn svg  {
+    background: #97C8EB;
+    border: 0px;
+    border-radius: 30px;
+}
+
+/*      Text Span       */
+ul.incomplete-task li#list-items span.strike {
+    text-decoration: line-through;
+}
+
+/*      Add a div before Todo-list      */
+/* ul#todo-list::before {
+    content: '';
+    width: 50px;
+    border: 1px solid black;
+} */
