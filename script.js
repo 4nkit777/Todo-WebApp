@@ -12,17 +12,103 @@ const deleteSVG = `<svg width="22px" height="22px" viewBox="-57 0 512 512" xmlns
                 <path class="delete-btn" d="m397.65 120.06-10.148-30.422c-2.6758-8.0195-10.184-13.43-18.641-13.43h-339.41c-8.4531 0-15.965 5.4102-18.637 13.43l-10.148 30.422c-1.957 5.8672 0.58984 11.852 5.3438 14.836 1.9375 1.2148 4.2305 1.9453 6.75 1.9453h372.8c2.5195 0 4.8164-0.73047 6.75-1.9492 4.7539-2.9844 7.3008-8.9688 5.3438-14.832z"/>
                 </svg>`;
 
+const div = document.getElementById('showCompleteTask');
+
 let data = { // Data object
     incompleteArray: [],
     completeArray: []
 };
 
+//          Delete Task Function
 
-// Function to get the input
+function taskDeleted() {
+    let item = this.parentNode.parentNode; // ul
+    let parent = this.parentNode;  // list item that needs to be removed
+    let id = item.id;
+    let textItemValue = parent.innerText;
 
-// input.innerHTML = '';
+    console.log(textItemValue);
 
+    if(id === 'todo-list') {
+        console.log(id);
+        data.incompleteArray.splice(data.incompleteArray.indexOf(textItemValue), 1);
+    }else{
+        data.completeArray.splice(data.completeArray.indexOf(textItemValue), 1);
+        console.log(id);
+    }
 
+    console.log(data);
+    item.removeChild(parent);
+}
+
+//          Show Div Function
+
+function hideDiv() {
+    div.classList.remove('show');
+    div.style.display = 'none';
+}
+
+hideDiv;
+
+//          Complete Task Function
+
+function taskCompleted() {
+    
+    div.style.display = 'block';
+    div.classList.add('show');
+    div.textContent = 'Completed';
+    
+    let item = this.parentNode.parentNode; // Type of list
+    let parent = this.parentNode;
+    let id = item.id;
+    console.log('id: ' + id);
+    let textVal = parent.innerText;
+    console.log(textVal);
+
+    if(id === 'todo-list') {
+        data.incompleteArray.splice(data.incompleteArray.indexOf(textVal), 1);
+        data.incompleteArray.push(textVal);
+        console.log(data);
+    }else {
+        data.incompleteArray.splice(data.incompleteArray.indexOf(textVal), 1);
+        data.incompleteArray.unshift(textVal);
+        console.log(data);
+    }
+
+    let target = (id === 'todo-list') ? document.getElementById('complete-list') : document.getElementById('todo-list');
+    // item.removeChild(parent);
+    target.insertBefore(parent, target.lastChild);
+}
+
+//          Create DOM      
+
+function createDOM(dataArray) {
+    for(let i = 0; i < dataArray.length; i++) {
+        
+        let taskItems = dataArray[i];
+        let generatedList = document.createElement('li');
+        generatedList.setAttribute('id', 'list-items');
+
+        let completeButton = document.createElement('button');
+        completeButton.setAttribute('class', 'add');
+        completeButton.innerHTML = addSVG;
+
+        let removeButton = document.createElement('button');
+        removeButton.setAttribute('class', 'delete');
+        removeButton.innerHTML = deleteSVG;
+
+        let taskItemsContainer = document.createElement('span');
+        taskItemsContainer.textContent = taskItems;
+
+        generatedList.appendChild(completeButton);
+        generatedList.appendChild(taskItemsContainer);
+        generatedList.appendChild(removeButton);
+        incompleteTaskList.appendChild(generatedList);
+
+        completeButton.addEventListener('click', taskCompleted);
+        removeButton.addEventListener('click', taskDeleted);
+    }
+}
 
 function inputTask(e) {
     // declare variables
@@ -38,92 +124,10 @@ function inputTask(e) {
             console.log(data.incompleteArray);
 
             incompleteTaskList.innerHTML = '';  // no duplicate entry
-            
-            for(let i = 0; i < data.incompleteArray.length; i++) {
-                let itemText = data.incompleteArray[i];
-                const listItems = document.createElement('li');
-                listItems.setAttribute('id', 'list-items');
 
-                const addBtn = document.createElement('button');
-                addBtn.setAttribute('class', 'add');
-                addBtn.innerHTML = addSVG;
-                
-                const deleteBtn = document.createElement('button');
-                deleteBtn.setAttribute('class', 'delete');
-                deleteBtn.innerHTML = deleteSVG;
-
-                const textSpan = document.createElement('span');
-                textSpan.textContent = itemText;
-
-                listItems.appendChild(addBtn);
-                listItems.appendChild(textSpan);
-                listItems.appendChild(deleteBtn);
-                incompleteTaskList.appendChild(listItems);
-
-                // Add Button events
-
-                function completeTask() {
-                    addBtn.classList.toggle('doneBtn');
-                    textSpan.classList.toggle('strike');
-
-                    let item = this.parentNode.parentNode; // Type of list
-                    let parent = this.parentNode;
-                    let id = item.id;
-                    console.log('id: ' + id);
-                    let textVal = parent.innerText;
-                    console.log(textVal);
-
-                    if(id === 'todo-list') {
-                        let extractedValue = data.incompleteArray.splice(data.incompleteArray.indexOf(textVal), 1);
-                        data.completeArray.push(textVal);
-                        console.log(data);
-                    }else {
-                        let extractedFromComplete = data.completeArray.splice(data.completeArray.indexOf(textVal), 1);
-                        data.incompleteArray.unshift(textVal);
-                        console.log(data);
-                    }
-
-                    let target = (id === 'todo-list') ? document.getElementById('complete-list') : document.getElementById('todo-list');
-                    // item.removeChild(parent);
-                    target.insertBefore(parent, target.lastChild);
-                    // target.parentNode.insertBefore(parent, target.nextSibling);
-                }
-
-                addBtn.addEventListener('click', completeTask);
-
-                // Remove list item function and listener
-
-                function removeTask() {
-                    let item = this.parentNode.parentNode; // ul
-                    let parent = this.parentNode;  // list item that needs to be removed
-                    let id = item.id;
-                    
-                    let textItemValue = parent.innerText;
-
-                    console.log(textItemValue);
-
-                    if(id === 'todo-list') {
-                        console.log(id);
-                        data.incompleteArray.splice(data.incompleteArray.indexOf(textItemValue), 1);
-                    }else{
-                        data.completeArray.splice(data.completeArray.indexOf(textItemValue), 1);
-                        console.log(id);
-                        
-                    }
-                    console.log(data);
-                    item.removeChild(parent);
-                    
-                    
-                }
-
-                deleteBtn.addEventListener('click', removeTask);
-
-            }
+            createDOM(data.incompleteArray);
         }
-
     }
-    
-
 }
 
 input.addEventListener('keypress', inputTask);
