@@ -138,15 +138,16 @@ ul.incomplete-task li#list-items button.delete:hover svg .delete-btn {
 }
 
 /*      Done Button     */
-ul.incomplete-task li#list-items button.doneBtn svg .tick-mark02 {
+
+ul.incomplete-task#complete-list li#list-items button.add svg .tick-mark02 {
     fill: white;
 }
 
-ul.incomplete-task li#list-items button.doneBtn svg .tick-mark01 {
+ul.incomplete-task#complete-list li#list-items button.add svg .tick-mark01 {
     fill: none;
 }
 
-ul.incomplete-task li#list-items button.doneBtn svg  {
+ul.incomplete-task#complete-list li#list-items button.add svg  {
     background: #97C8EB;
     border: 0px;
     border-radius: 30px;
@@ -158,8 +159,19 @@ ul.incomplete-task li#list-items span.strike {
 }
 
 /*      Add a div before Todo-list      */
-/* ul#todo-list::before {
+/* ul.incomplete-task#complete-list:not(:empty)::before {
     content: '';
-    width: 50px;
-    border: 1px solid black;
+    width: 150px;
+    height: 1px;
+    background: gray;
 } */
+
+
+div.task-list div.show {
+    width: 100px;
+    height: 25px;
+    background-color: pink;
+    color: #093A3E;
+    justify-self: center;
+    font-size: 0.5em;
+}
